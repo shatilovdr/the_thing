@@ -2,6 +2,7 @@
 #define STOPWATCH_HPP_
 
 #include <vector>
+#include <chrono>
 
 class Stopwatch {
  public:
