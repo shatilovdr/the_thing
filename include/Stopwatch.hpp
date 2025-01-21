@@ -16,7 +16,9 @@ class Stopwatch {
   void pause();
   void resume();
   void reset();
+  void lap();
   void display() const;
+  void displayLaps() const;
 
 
  private:
@@ -30,6 +32,6 @@ class Stopwatch {
 
 };
 
-std::ostream& operator<<(std::ostream& os, std::chrono::seconds& duration);
+std::ostream& operator<<(std::ostream& os, const std::chrono::seconds& duration);
 
 #endif

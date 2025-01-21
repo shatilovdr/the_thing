@@ -31,6 +31,11 @@ void Stopwatch::reset() {
   start();
 }
 
+void Stopwatch::lap() {
+  pause();
+  resume();
+}
+
 void Stopwatch::display() const {
   seconds totalDuration = totalDuration_;
   if (isRunning_) {
@@ -40,15 +45,25 @@ void Stopwatch::display() const {
   std::cout << totalDuration << '\n';
 }
 
-std::ostream& operator<<(std::ostream& out, std::chrono::seconds& duration) {
-  std::chrono::hours hours = std::chrono::duration_cast<std::chrono::hours>(duration);
-  duration -= hours;
-  std::chrono::minutes minutes = std::chrono::duration_cast<std::chrono::minutes>(duration);
-  duration -= minutes;
+void Stopwatch::displayLaps() const {
+  uint32_t i = 0;
+  for (const seconds& lap : laps_)
+    std::cout << ++i << ' ' << lap << '\n';
+}
 
-  out << std::setfill('0') << std::setw(2) << hours.count() << ":"
-      << std::setw(2) << minutes.count() << ":"
-      << std::setw(2) << duration.count();
+std::ostream& operator<<(std::ostream& out, const std::chrono::seconds& duration) {
+  using rep = std::chrono::seconds::rep;
+  constexpr rep SECONDS_PER_HOUR = 3600;
+  constexpr rep SECONDS_PER_MINUTE = 60;
 
+  rep seconds = duration.count();
+  rep hours = seconds / SECONDS_PER_HOUR;
+  seconds -= hours * SECONDS_PER_HOUR;
+  rep minutes = seconds / SECONDS_PER_MINUTE;
+  seconds -= minutes * SECONDS_PER_MINUTE;
+
+  out << std::setfill('0') << std::setw(2) << hours << ":"
+      << std::setw(2) << minutes << ":"
+      << std::setw(2) << seconds;
   return out;
 }

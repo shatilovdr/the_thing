@@ -4,15 +4,17 @@
 int main() {
   Stopwatch stopwatch;
   int choice;
-
+  std::cout << sizeof(std::chrono::seconds) << '\n';
   while (true) {
       std::cout << "\n--- Stopwatch Menu ---\n";
       std::cout << "1. Start Stopwatch\n";
       std::cout << "2. Pause Stopwatch\n";
       std::cout << "3. Resume Stopwatch\n";
       std::cout << "4. Reset Stopwatch\n";
-      std::cout << "5. Display Stopwatch\n";
-      std::cout << "6. Exit\n";
+      std::cout << "5. Record Lap\n";
+      std::cout << "6. Display Stopwatch\n";
+      std::cout << "7. Display Laps\n";
+      std::cout << "8. Exit\n";
       std::cout << "Enter your choice: ";
       std::cin >> choice;
       switch (choice) {
@@ -29,9 +31,15 @@ int main() {
           stopwatch.reset();
           break;
       case 5:
-          stopwatch.display();
+          stopwatch.lap();
           break;
       case 6:
+          stopwatch.display();
+          break;
+      case 7:
+          stopwatch.displayLaps();
+          break;
+      case 8:
           std::cout << "Exiting program.\n";
           return 0;
       default:
